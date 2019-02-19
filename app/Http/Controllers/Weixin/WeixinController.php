@@ -243,7 +243,7 @@ class WeixinController extends Controller
                 ],
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
-                    "name"  => "京东",
+                    "name"  => "京东1",
                     "url"   => "https://www.jd.com"
                 ]
             ]
