@@ -36,14 +36,28 @@ class WeixinController extends Controller
 
         //解析XML
         $xml = simplexml_load_string($data);        //将 xml字符串 转换成对象
-
         $event = $xml->Event;                       //事件类型
         //var_dump($xml);echo '<hr>';
 
-        if($event=='subscribe'){
-            $openid = $xml->FromUserName;               //用户openid
-            $sub_time = $xml->CreateTime;               //扫码关注时间
+        $openid = $xml->FromUserName;               //用户openid
 
+        // 处理用户发送消息
+        if(isset($xml->MsgType)){
+            if($xml->MsgType=='text'){            //用户发送文本消息
+                $msg = $xml->Content;
+                $xml_response = '<xml>
+                                    <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                                    <FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName>
+                                    <CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType>
+                                    <Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content>
+                                  </xml>';
+                echo $xml_response;
+                exit();
+            }
+        }
+
+        if($event=='subscribe'){
+            $sub_time = $xml->CreateTime;               //扫码关注时间
 
             echo 'openid: '.$openid;echo '</br>';
             echo '$sub_time: ' . $sub_time;
@@ -70,13 +84,36 @@ class WeixinController extends Controller
                 $id = WeixinUser::insertGetId($user_data);      //保存用户信息
                 var_dump($id);
             }
+        }elseif($event=='CLICK'){               //click 菜单
+            if($xml->EventKey=='huamulan'){
+                $this->huamulan($openid,$xml->ToUserName);
+            }
         }
+
 
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
     }
 
-
+    /**
+     * 客服处理
+     * @param $openid   用户openid
+     * @param $from     开发者公众号id 非 APPID
+     */
+    public function huamulan($openid,$from)
+    {
+        // 文本消息
+        $xml_response = '<xml>
+                            <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                            <FromUserName><![CDATA['.$from.']]></FromUserName>
+                            <CreateTime>'.time().'</CreateTime>
+                            <MsgType><![CDATA[text]]></MsgType>
+                            <Content>
+                                <![CDATA['. '我木兰贼秀, 现在时间'. date('Y-m-d H:i:s') .']]>
+                            </Content>
+                        </xml>';
+        echo $xml_response;
+    }
 
 
     /**
@@ -144,14 +181,24 @@ class WeixinController extends Controller
         $data = [
             "button"    => [
                 [
-                    "type"  => "view",      // view类型 跳转指定 URL
-                    "name"  => "Lening222",
-                    "url"   => "https://www.baidu.com"
+                    "name" =>'仙',
+                    "sub_button"  =>[
+                        [
+                            "type"  => "view",
+                            "name"  => "项目",
+                            "url"   => "https://zty.tactshan.com"
+                        ],
+                        [
+                            "type"  => "view",
+                            "name"  => "2",
+                            "url"   => "https://www.baidu.com"
+                        ]
+                    ]
                 ],
                 [
-                    "type"  => "view",      // view类型 跳转指定 URL
-                    "name"  => "淘宝",
-                    "url"   => "https://www.taobao.com"
+                    "type"  => "click",       // click类型
+                    "name"  => "木兰首秀",
+                    "key"   => "huamulan"
                 ],
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
