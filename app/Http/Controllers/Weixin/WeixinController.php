@@ -176,7 +176,7 @@ class WeixinController extends Controller
     /**
      * 处理视频信息
      */
-    public  function dlVideo(){
+    public  function dlVideo($media_id){
         $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken().'&media_id='.$media_id;
 
         $client = new GuzzleHttp\Client();
