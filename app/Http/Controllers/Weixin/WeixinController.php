@@ -73,6 +73,18 @@ class WeixinController extends Controller
 
                     //保存用户信息
                     $u = WeixinUser::where(['openid'=>$openid])->first();
+
+                    $xml_response = '<xml>
+                            <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                            <FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName>
+                            <CreateTime>'.time().'</CreateTime>
+                            <MsgType><![CDATA[text]]></MsgType>
+                            <Content>
+                                <![CDATA['. 'welcome zty 公众号'. date('Y-m-d H:i:s') .']]>
+                            </Content>
+                        </xml>';
+                    echo $xml_response;
+
                     if($u){       //用户不存在
                         //echo '用户已存在';
                     }else{
@@ -89,8 +101,8 @@ class WeixinController extends Controller
                         //var_dump($id);
                     }
                 }elseif($event=='CLICK'){               //click 菜单
-                    if($xml->EventKey=='kefu01'){       // 根据 EventKey判断菜单
-                        $this->kefu01($openid,$xml->ToUserName);
+                    if($xml->EventKey=='huamulan'){       // 根据 EventKey判断菜单
+                        $this->huamulan($openid,$xml->ToUserName);
                     }
                 }
 
