@@ -15,5 +15,6 @@ Route::group([
     $router->resource('/goods',Goods2Controller::class);
     $router->resource('/users',UsersController::class);
     $router->resource('/wxuser',WeixinController::class);
+    $router->resource('/wxmedia',WeixinMediaController::class); //微信素材管理
 
 });
