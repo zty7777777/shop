@@ -122,7 +122,7 @@ class WeixinController extends Controller
                             <CreateTime>'.time().'</CreateTime>
                             <MsgType><![CDATA[text]]></MsgType>
                             <Content>
-                                <![CDATA['. '我木兰贼秀, 现在时间'. date('Y-m-d H:i:s') .']]>
+                                <![CDATA['. '我木兰贼秀鸭, 现在时间'. date('Y-m-d H:i:s') .']]>
                             </Content>
                         </xml>';
         echo $xml_response;
