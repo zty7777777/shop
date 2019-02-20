@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Weixin;
 
+use App\Model\WeixinMedia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
