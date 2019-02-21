@@ -90,12 +90,12 @@ class WeixinMediaController extends Controller
         $grid->format('Format');
         $grid->msg_id('Msg id');
         $grid->local_file_name('Local file name')->display(function ($file_name){
-            if(substr($file_name,strpos($str,'.')+1)=='amr'){
+            if(substr($file_name,strpos($file_name,'.')+1)=='amr'){
                 $img_url='<a href="https://zty.tactshan.com/wx/'.$file_name.'">下载图片</a>';
-            }elseif (substr($file_name,strpos($str,'.')+1)=='mp4'){
+            }elseif (substr($file_name,strpos($file_name,'.')+1)=='mp4'){
                 $img_url='<a href="https://zty.tactshan.com/wx/'.$file_name.'">下载视频</a>';
             }else{
-                $img_url= '<img src="'.$file_name.'">';
+                $img_url= '<img src="'.$file_name.'" width=70px>';
             }
             return $img_url;
 
