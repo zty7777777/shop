@@ -89,7 +89,17 @@ class WeixinMediaController extends Controller
         $grid->media_id('Media id');
         $grid->format('Format');
         $grid->msg_id('Msg id');
-        $grid->local_file_name('Local file name');
+        $grid->local_file_name('Local file name')->display(function ($file_name){
+            if(substr($file_name,'.',-3)=='amr'){
+                $img_url='<a href="https://zty.tactshan.com/wx/'.$file_name.'">下载图片</a>';
+            }elseif (substr($file_name,'.',-3)=='mp4'){
+                $img_url='<a href="https://zty.tactshan.com/wx/'.$file_name.'">下载视频</a>';
+            }else{
+                $img_url= '<img src="'.$file_name.'">';
+            }
+            return $img_url;
+
+        });
         $grid->local_file_path('Local file path');
 
         return $grid;
