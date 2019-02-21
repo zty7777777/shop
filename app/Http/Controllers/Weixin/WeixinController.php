@@ -72,7 +72,7 @@ class WeixinController extends Controller
                     echo $xml_response;
 
                     //写入数据库
-                    $data = [
+                   /* $data = [
                         'openid'    => $openid,
                         'add_time'  => time(),
                         'msg_type'  => 'image',
@@ -83,7 +83,7 @@ class WeixinController extends Controller
                     ];
 
                     $m_id = WeixinMedia::insertGetId($data);
-                    var_dump($m_id);
+                    var_dump($m_id);*/
                 }
             }elseif($xml->MsgType=='voice'){        //处理语音信息
                 $file_name=$this->dlVoice($xml->MediaId);
@@ -105,7 +105,7 @@ class WeixinController extends Controller
                 $data = [
                     'openid'    => $openid,
                     'add_time'  => time(),
-                    'msg_type'  => 'voice',
+                    'msg_type'  => 'video',
                     'media_id'  => $xml->MediaId,
                     'format'    => $xml->Format,
                     'msg_id'    => $xml->MsgId,
@@ -377,4 +377,6 @@ class WeixinController extends Controller
 
 
     }
+
+
 }

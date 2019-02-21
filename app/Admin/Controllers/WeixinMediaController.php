@@ -138,4 +138,12 @@ class WeixinMediaController extends Controller
 
         return $form;
     }
+
+    /**
+     * 群发消息
+     */
+    public function sendall()
+    {
+        echo __METHOD__;
+    }
 }
