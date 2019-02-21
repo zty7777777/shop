@@ -9,6 +9,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use function foo\func;
 
 class WeixinMediaController extends Controller
 {
@@ -88,7 +89,9 @@ class WeixinMediaController extends Controller
         $grid->media_id('Media id');
         $grid->format('Format');
         $grid->msg_id('Msg id');
-        $grid->local_file_name('Local file name');
+        $grid->local_file_name('Local file name')->display(function ($url){
+            return '<img src="/wx/images'.$url.'">';
+        });
         $grid->local_file_path('Local file path');
 
         return $grid;
