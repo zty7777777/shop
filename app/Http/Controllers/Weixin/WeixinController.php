@@ -86,9 +86,38 @@ class WeixinController extends Controller
                     var_dump($m_id);
                 }
             }elseif($xml->MsgType=='voice'){        //处理语音信息
-                $this->dlVoice($xml->MediaId);
+                $file_name= $this->dlVoice($xml->MediaId);
+
+                //写入数据库
+                $data = [
+                    'openid'    => $openid,
+                    'add_time'  => time(),
+                    'msg_type'  => 'image',
+                    'media_id'  => $xml->MediaId,
+                    'format'    => $xml->Format,
+                    'msg_id'    => $xml->MsgId,
+                    'local_file_name'   => $file_name
+                ];
+
+                $m_id = WeixinMedia::insertGetId($data);
+                var_dump($m_id);
             }elseif($xml->MsgType=='video'){        //处理视频
-                $this->dlVideo($xml->MediaId);
+                $file_name=$this->dlVideo($xml->MediaId);
+
+                //写入数据库
+                $data = [
+                    'openid'    => $openid,
+                    'add_time'  => time(),
+                    'msg_type'  => 'image',
+                    'media_id'  => $xml->MediaId,
+                    'format'    => $xml->Format,
+                    'msg_id'    => $xml->MsgId,
+                    'local_file_name'   => $file_name
+                ];
+
+                $m_id = WeixinMedia::insertGetId($data);
+                var_dump($m_id);
+
             }elseif($xml->MsgType=='event'){        //判断事件类型
 
                 if($event=='subscribe'){                        //扫码关注事件
@@ -210,6 +239,7 @@ class WeixinController extends Controller
         }else{      //保存失败
 
         }
+        return $file_name;
     }
 
     /**
@@ -235,6 +265,7 @@ class WeixinController extends Controller
         }else{      //保存失败
 
         }
+        return $file_name;
     }
 
 
