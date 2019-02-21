@@ -34,14 +34,14 @@ class WeixinController extends Controller
      */
     public function wxEvent()
     {
-        $data = file_get_contents("php://input");
+        $return_data = file_get_contents("php://input");
 
 
         //解析XML
-        $xml = simplexml_load_string($data);        //将 xml字符串 转换成对象
+        $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
 
         //记录日志
-        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
+        $log_str = date('Y-m-d H:i:s') . "\n" . $return_data . "\n<<<<<<<";
         file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
 
         $event = $xml->Event;                       //事件类型
@@ -86,10 +86,34 @@ class WeixinController extends Controller
                     var_dump($m_id);
                 }
             }elseif($xml->MsgType=='voice'){        //处理语音信息
-                $this->dlVoice($xml->MediaId);
-            }elseif($xml->MsgType=='video'){        //处理视频
-               $this->dlVideo($xml->MediaId);
+                $file_name=$this->dlVoice($xml->MediaId);
+                //写入数据库
+                $data = [
+                    'openid'    => $openid,
+                    'add_time'  => time(),
+                    'msg_type'  => 'voice',
+                    'media_id'  => $xml->MediaId,
+                    'format'    => $xml->Format,
+                    'msg_id'    => $xml->MsgId,
+                    'local_file_name'   => $file_name
+                ];
 
+                $m_id = WeixinMedia::insertGetId($data);
+                var_dump($m_id);
+            }elseif($xml->MsgType=='video'){        //处理视频
+                $file_name=$this->dlVideo($xml->MediaId);
+                $data = [
+                    'openid'    => $openid,
+                    'add_time'  => time(),
+                    'msg_type'  => 'voice',
+                    'media_id'  => $xml->MediaId,
+                    'format'    => $xml->Format,
+                    'msg_id'    => $xml->MsgId,
+                    'local_file_name'   => $file_name
+                ];
+
+                $m_id = WeixinMedia::insertGetId($data);
+                var_dump($m_id);
             }elseif($xml->MsgType=='event'){        //判断事件类型
 
                 if($event=='subscribe'){                        //扫码关注事件
@@ -211,7 +235,7 @@ class WeixinController extends Controller
         }else{      //保存失败
 
         }
-
+        return $file_name;
     }
 
     /**
@@ -237,7 +261,7 @@ class WeixinController extends Controller
         }else{      //保存失败
 
         }
-
+        return $file_name;
     }
 
 
