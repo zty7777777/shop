@@ -90,7 +90,7 @@ class WeixinMediaController extends Controller
         $grid->format('Format');
         $grid->msg_id('Msg id');
         $grid->local_file_name('Local file name')->display(function ($url){
-            return '<img src="https://zty.tactshan.com/images'.$url.'">';
+            return '<img src="https://zty.tactshan.com/images/'.$url.'">';
         });
         $grid->local_file_path('Local file path');
 
