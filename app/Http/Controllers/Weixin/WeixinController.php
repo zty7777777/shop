@@ -101,7 +101,6 @@ class WeixinController extends Controller
                 ];
 
                 $m_id = WeixinMedia::insertGetId($data);
-                var_dump($m_id);
             }elseif($xml->MsgType=='video'){        //处理视频
                 $file_name=$this->dlVideo($xml->MediaId);
                 $data = [
