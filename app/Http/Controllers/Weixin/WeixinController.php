@@ -380,4 +380,10 @@ class WeixinController extends Controller
     }
 
 
+    public  function testsub(){
+        $str="abc.jpgas";
+        echo substr($str,strpos($str,'.')+1);
+    }
+
+
 }
