@@ -114,7 +114,6 @@ class WeixinController extends Controller
                 ];
 
                 $m_id = WeixinMedia::insertGetId($data);
-                var_dump($m_id);
             }elseif($xml->MsgType=='event'){        //判断事件类型
 
                 if($event=='subscribe'){                        //扫码关注事件

@@ -95,7 +95,7 @@ class WeixinMediaController extends Controller
             }elseif (substr($file_name,strpos($file_name,'.')+1)=='mp4'){
                 $img_url='<a href="https://zty.tactshan.com/wx/video/'.$file_name.'">下载视频</a>';
             }else{
-                $img_url= '<img src="https://zty.tactshan.com/wx/images/'.$file_name.'" width=70px>';
+                $img_url= '<img src="https://zty.tactshan.com/wx/images/'.$file_name.'" width=90px>';
             }
             return $img_url;
 
