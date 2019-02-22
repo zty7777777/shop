@@ -154,7 +154,7 @@ class WeixinPmMediaController extends Controller
 
     }
 
-    public function formTest(Request $reqest)
+    public function formTest(Request $request)
     {
         //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';
         //echo '<pre>';print_r($_FILES);echo '</pre>';echo '<hr>';
