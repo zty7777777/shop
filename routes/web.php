@@ -89,7 +89,7 @@ Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');      //支�
 
 //微信
 Route::get('/weixin/valid','Weixin\WeixinController@validToken');
-Route::get('/weixin/valid1','Weixin\WeixinController@validToken1');
+Route::get('/weixin/valid1','Weixin\WeixinController@validToken1');   //access_token
 Route::post('/weixin/valid1','Weixin\WeixinController@wxEvent');        //接收微信服务器事件推送
 Route::post('/weixin/valid','Weixin\WeixinController@validToken');
 Route::get('/weixin/testsub','Weixin\WeixinController@testsub');

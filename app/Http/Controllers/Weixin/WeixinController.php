@@ -25,7 +25,7 @@ class WeixinController extends Controller
         //$get = json_encode($_GET);
         //$str = '>>>>>' . date('Y-m-d H:i:s') .' '. $get . "<<<<<\n";
         //file_put_contents('logs/weixin.log',$str,FILE_APPEND);
-        echo $_GET['echostr'];
+        //echo $_GET['echostr'];
         echo 'Token: '. $this->getWXAccessToken();
     }
 
@@ -365,7 +365,7 @@ class WeixinController extends Controller
         // 3 解析微信接口返回信息
 
         $response_arr = json_decode($r->getBody(),true);
-        //echo '<pre>';print_r($response_arr);echo '</pre>';
+        //echo '<pre>';print_r($response_arr);echo '</  >';
 
         if($response_arr['errcode'] == 0){
             echo "菜单创建成功";
