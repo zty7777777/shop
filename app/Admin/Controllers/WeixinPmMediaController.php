@@ -137,8 +137,8 @@ class WeixinPmMediaController extends Controller
         $response = $client->request('POST',$url,[
             'multipart' => [
                 [
-                    'name'     => 'media',
-                    'contents' => fopen($file_path, 'r')
+                    'media_id'     => 'media',
+                    'url' => fopen($file_path, 'r')
                 ],
             ]
         ]);
