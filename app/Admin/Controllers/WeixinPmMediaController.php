@@ -148,12 +148,13 @@ class WeixinPmMediaController extends Controller
         $d = json_decode($body,true);
         echo '<pre>';print_r($d);echo '</pre>';
         $d['addtime']=time();
-        $pm_id=WeixinPmMedia::insertGetId();
+        $pm_id=WeixinPmMedia::insertGetId($d);
+
          var_dump($pm_id);
 
     }
 
-    public function formTest(Request $request)
+    public function formTest(Request $reqest)
     {
         //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';
         //echo '<pre>';print_r($_FILES);echo '</pre>';echo '<hr>';
