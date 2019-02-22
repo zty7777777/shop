@@ -35,7 +35,7 @@ class WeixinController extends Controller
     public function wxEvent()
     {
         $return_data = file_get_contents("php://input");
-
+        var_dump($return_data);exit;
 
         //解析XML
         $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
@@ -381,7 +381,9 @@ class WeixinController extends Controller
 
     public  function testsub(){
         $str="abc.jpgas";
-        echo substr($str,strpos($str,'.')+1);
+        //echo substr($str,strpos($str,'.')+1);
+
+        return redirect('/goodslist');//页面跳转。重定向
     }
 
 

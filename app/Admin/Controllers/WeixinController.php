@@ -169,12 +169,13 @@ class WeixinController extends Controller
     public function chatview($data){
         $form = new Form(new WeixinUser);
         $form->textarea('content','聊天内容');
+        $form->textarea('','聊天内容')->value($this->returnmsg($data['openid']));
         $form->hidden('openid')->value($data['openid']);
         return $form;
     }
 
     /**
-     * 接收群发内容 dochat
+     * 接收处理消息 dochat
      */
     public function dochat(Request $request){
         $msg=$request->input('content');
@@ -193,8 +194,6 @@ class WeixinController extends Controller
         $res=$client->request('POST', $url, ['body' => json_encode($data,JSON_UNESCAPED_UNICODE)]);
         $res_arr=json_decode($res->getBody(),true);
         if($res_arr){
-            $url="/";
-            return redirect("errors/403?from={$url}");
         }
     }
 
@@ -215,6 +214,31 @@ class WeixinController extends Controller
             Redis::setTimeout($this->redis_weixin_access_token,3600);
         }
         return $token;
+    }
+
+    //接收用户信息
+    public function returnmsg($openid){
+        $return_data = file_get_contents("php://input");
+
+
+
+        //解析XML
+        $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
+        var_dump($xml);exit;
+
+        //事件类型$event = $xml->Event;
+        //$openid = $xml->FromUserName;               //用户openid
+
+
+        // 处理用户发送消息
+                $msg = $xml->Content;
+                $xml_response = '<xml>
+                                    <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                                    <FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName>
+                                    <CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType>
+                                    <Content><![CDATA['. $msg.  date('Y-m-d H:i:s') .']]></Content>
+                                  </xml>';
+                echo $xml_response;
     }
 
 
