@@ -35,7 +35,7 @@ class WeixinController extends Controller
     public function wxEvent()
     {
         $return_data = file_get_contents("php://input");
-        var_dump($return_data);exit;
+
 
         //解析XML
         $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
@@ -43,7 +43,7 @@ class WeixinController extends Controller
         //记录日志
         $log_str = date('Y-m-d H:i:s') . "\n" . $return_data . "\n<<<<<<<";
         file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
-
+        var_dump($return_data);exit;
         $event = $xml->Event;                       //事件类型
         $openid = $xml->FromUserName;               //用户openid
 
