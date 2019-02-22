@@ -147,7 +147,8 @@ class WeixinPmMediaController extends Controller
         echo $body;echo '<hr>';
         $d = json_decode($body,true);
         echo '<pre>';print_r($d);echo '</pre>';
-
+        $pm_id=WeixinPmMedia::insertId();
+         var_dump($pm_id);
 
     }
 
