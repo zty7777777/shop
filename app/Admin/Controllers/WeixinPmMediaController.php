@@ -28,7 +28,7 @@ class WeixinPmMediaController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
+            ->header('微信永久素材管理')
             ->description('description')
             ->body($this->grid());
     }
@@ -130,7 +130,7 @@ class WeixinPmMediaController extends Controller
     /**
      * 上传永久素材
      */
-    public function upMaterialTest($file_path)
+    public function upMaterialTest($file_path,$new_file_name)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->getWXAccessToken().'&type=image';
         $client = new GuzzleHttp\Client();
@@ -181,7 +181,7 @@ class WeixinPmMediaController extends Controller
         echo 'save_file_path: '.$save_file_path;echo '<hr>';
 
         //上传至微信永久素材
-        $this->upMaterialTest($save_file_path);
+        $this->upMaterialTest($save_file_path,$new_file_name);
 
 
     }
