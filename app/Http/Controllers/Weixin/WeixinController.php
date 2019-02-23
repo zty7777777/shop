@@ -59,6 +59,11 @@ class WeixinController extends Controller
                                     <Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content>
                                   </xml>';
                 echo $xml_response;
+                $msgData=[
+                    'openid'=>$openid,
+                    'msg'=>$msg,
+                    'addtime'=>time()
+                ];
             }elseif($xml->MsgType=='image'){       //用户发送图片信息
                 //视业务需求是否需要下载保存图片
                 if(1){  //下载图片素材
