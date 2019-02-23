@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Weixin;
 
 use App\Model\WeixinMedia;
+use App\Model\WeixinMsg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -59,11 +60,16 @@ class WeixinController extends Controller
                                     <Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content>
                                   </xml>';
                 echo $xml_response;
+
+                //保存聊天记录到数据库
+
                 $msgData=[
                     'openid'=>$openid,
                     'msg'=>$msg,
                     'addtime'=>time()
                 ];
+
+                WeixinMsg::insertGetId($msgData);
             }elseif($xml->MsgType=='image'){       //用户发送图片信息
                 //视业务需求是否需要下载保存图片
                 if(1){  //下载图片素材
