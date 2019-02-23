@@ -220,7 +220,7 @@ class WeixinController extends Controller
     public function returnmsg($openid){
         $return_data = file_get_contents("php://input");
 
-
+       var_dump($return_data);exit;
 
         //解析XML
         $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
