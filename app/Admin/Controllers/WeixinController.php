@@ -169,7 +169,7 @@ class WeixinController extends Controller
     public function chatview($data){
         $form = new Form(new WeixinUser);
         $form->textarea('content','聊天内容');
-        $form->textarea('','聊天内容')->value($this->returnmsg($data['openid']));
+       // $form->textarea('','聊天内容')->value($this->returnmsg($data['openid']));
         $form->hidden('openid')->value($data['openid']);
         return $form;
     }
@@ -220,7 +220,7 @@ class WeixinController extends Controller
     public function returnmsg($openid){
         $return_data = file_get_contents("php://input");
 
-       var_dump($return_data);exit;
+       //var_dump($return_data);exit;
 
         //解析XML
         $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
