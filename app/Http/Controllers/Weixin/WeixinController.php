@@ -59,7 +59,7 @@ class WeixinController extends Controller
                                     <CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType>
                                     <Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content>
                                   </xml>';
-                echo $xml_response;
+               // echo $xml_response;
 
                 //保存聊天记录到数据库
 

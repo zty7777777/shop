@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Model\WeixinMsg;
 use App\Model\WeixinUser;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -87,7 +88,7 @@ class WeixinController extends Controller
         $grid->id('Id');
         $grid->uid('Uid');
         $grid->openid('Openid')->display(function ($openid){
-            return "<a href='/admin/userchat/send?openid=".$openid."'>".$openid."</a>";
+            return "<a href='/admin/userchat?openid=".$openid."'>".$openid."</a>";
         });
         $grid->add_time('Add time');
         $grid->nickname('Nickname');
@@ -160,7 +161,7 @@ class WeixinController extends Controller
             ->header($data['nickname'])
             ->description("聊天")
             ->row("<img src='".$data['headimgurl']."' width='70px'>")
-            ->body($this->chatview($data));
+            ->body(view('/weixin/chat',['openid'=>$data['openid']]));//($this->chatview($data));
     }
     /**
      * 客服私聊视图
@@ -168,18 +169,23 @@ class WeixinController extends Controller
 
     public function chatview($data){
         $form = new Form(new WeixinUser);
-        $form->textarea('content','聊天内容');
-       // $form->textarea('','聊天内容')->value($this->returnmsg($data['openid']));
+
+        //$form->setView('/weixin/chat',['openid'=>$data['openid']]);
+
+
+        $form->text('content','输入聊天内容')->placeholder('请输入');
         $form->hidden('openid')->value($data['openid']);
         return $form;
+        return view('/weixin/chat',['openid'=>$data['openid']]);
     }
 
     /**
      * 接收处理消息 dochat
      */
     public function dochat(Request $request){
-        $msg=$request->input('content');
         $openid=$request->input('openid');
+        $msg=$request->input('msg');
+
         //获取access_token
         $access_token=$this->getWXAccessToken();
         //拼接url
@@ -193,8 +199,15 @@ class WeixinController extends Controller
         ];
         $res=$client->request('POST', $url, ['body' => json_encode($data,JSON_UNESCAPED_UNICODE)]);
         $res_arr=json_decode($res->getBody(),true);
-        if($res_arr){
+        if ($res_arr['errcode'] == 0) {
+            return "发送成功";
+        } else {
+            echo "发送失败";
+            echo '</br>';
+            echo $res_arr['errmsg'];
+
         }
+
     }
 
     /**
@@ -216,28 +229,33 @@ class WeixinController extends Controller
         return $token;
     }
 
-    //接收用户信息
-    public function returnmsg($openid){
-        $return_data = file_get_contents("php://input");
+    /**
+     *
+     * 获取消息
+     */
+    public function getChatMsg()
+    {
+        $openid = $_GET['openid'];  //用户openid
+        $pos = $_GET['pos'];        //上次聊天位置
 
-       //var_dump($return_data);exit;
+        $msg = WeixinMsg::where(['openid'=>$openid])->where('id','>',$pos)->first();
 
-        //解析XML
-        $xml = simplexml_load_string($return_data);        //将 xml字符串 转换成对象
+        //$msg = WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->get();
+        if($msg){
+            $response = [
+                'errno' => 0,
+                'data'  => $msg->toArray()
+            ];
 
-        //事件类型$event = $xml->Event;
-        //$openid = $xml->FromUserName;               //用户openid
+        }else{
+            $response = [
+                'errno' => 50001,
+                'msg'   => '服务器异常，请联系管理员'
+            ];
+        }
 
+        die( json_encode($response));
 
-        // 处理用户发送消息
-                $msg = $xml->Content;
-                $xml_response = '<xml>
-                                    <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                                    <FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName>
-                                    <CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType>
-                                    <Content><![CDATA['. $msg.  date('Y-m-d H:i:s') .']]></Content>
-                                  </xml>';
-                echo $xml_response;
     }
 
 
