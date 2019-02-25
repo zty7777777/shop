@@ -250,7 +250,7 @@ class WeixinController extends Controller
         }else{
             $response = [
                 'errno' => 50001,
-                'msg'   => '服务器异常4，请联系管理员'
+                'msg'   => '服务器异常5，请联系管理员'
             ];
         }
 
