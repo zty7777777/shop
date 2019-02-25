@@ -239,6 +239,7 @@ class WeixinController extends Controller
         $pos = $_GET['pos'];        //上次聊天位置
 
         $msg = WeixinMsg::where(['openid'=>$openid])->where('id','>',$pos)->first();
+        $msg['addtime']=date('Y-m-d H:i:s',$msg['addtime']);
 
         //$msg = WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->get();
         if($msg){
