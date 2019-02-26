@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container" >
-    <h3>wechat支付:{{$code_url}}</h3>
-    <input type="hidden" id="code_url" value="">
+    <h3>wechat支付:</h3>
+    <input type="hidden" id="code_url" value="{{$code_url}}">
     <div id="code"></div>
 
 </div>
