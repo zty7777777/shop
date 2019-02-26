@@ -28,7 +28,8 @@
             </td>
             <td>
                 @if($v['is_pay']==0){{--/pay/o/{{$v['oid']}}--}}
-                    <a href="/pay/o/{{$v['oid']}}" class="btn btn-info btn-sm">去支付</a>
+                    <a href="/pay/o/{{$v['oid']}}" class="btn btn-info btn-sm">支付宝支付</a>
+                    <a href="/weixin/pay/index/{{$v['oid']}}" class="btn btn-info btn-sm">  微信支付</a>
                 @elseif($v['is_pay']==1)
                     <a href="javascript:void(0)" class="btn btn-danger btn-sm">查看物流</a>
                 @endif

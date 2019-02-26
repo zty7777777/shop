@@ -98,7 +98,7 @@ Route::post('/weixin/valid','Weixin\WeixinController@validToken');
 Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu');     //创建菜单
 
 //微信支付
-Route::get('/weixin/pay/index','Weixin\PayController@index');
+Route::get('/weixin/pay/index/{oid}','Weixin\PayController@index');
 Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
 
 

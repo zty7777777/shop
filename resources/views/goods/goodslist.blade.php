@@ -19,7 +19,7 @@
             <td>{{$v['goods_id']}}</td>
             <td><a href="/goodsdetail/{{$v['goods_id']}}">{{$v['goods_name']}}</a></td>
             <td>{{$v['store']}}</td>
-            <td>{{$v['price']/100}}</td>
+            <td>{{$v['price']}}</td>
         </tr>
         @endforeach
     </table>

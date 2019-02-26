@@ -10,22 +10,25 @@ use App\Model\OrderModel;
 class PayController extends Controller{
 
     public $weixin_unifiedorder_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-    public $weixin_notify_url = 'http://zty.tactshan.com/weixin/pay/notice';     //支付通知回调\
+    public $weixin_notify_url = 'https://zty.tactshan.com/weixin/pay/notice';     //支付通知回调\
 
-    public function index(){
+    public function index($oid){
 
 
         $order_amount=1; //订单总金额
-        $order_id=OrderModel::generateOrderSN();
+        $orderinfo=OrderModel::where(['oid'=>$oid])->first();
+        if(empty($orderinfo)){
+            exit('此订单不存在');
+        }
 
         $order_info=[
             'appid'         =>  env('WEIXIN_APPID_0'),      //微信支付绑定的服务号的APPID
             'mch_id'        =>  env('WEIXIN_MCH_ID'),       // 商户ID
             'nonce_str'     => str_random(16),             // 随机字符串
             'sign_type'     => 'MD5',
-            'body'          => 'zty测试订单-'.mt_rand(1111,9999) . str_random(6),
-            'out_trade_no'  => $order_id,                       //本地订单号
-            'total_fee'     => $order_amount,
+            'body'          => 'zty订单支付--'.mt_rand(1111,9999) . str_random(6),
+            'out_trade_no'  => $orderinfo['order_sn'],                       //本地订单号
+            'total_fee'     => $orderinfo['$order_amount'],     //订单总金额
             'spbill_create_ip'  => $_SERVER['REMOTE_ADDR'],     //客户端IP
             'notify_url'    => $this->weixin_notify_url,        //通知回调地址
             'trade_type'    => 'NATIVE'                         // 交易类型
@@ -38,7 +41,11 @@ class PayController extends Controller{
         $xml=$this->ToXml();   //将数组转化为xml格式
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
-        echo 'code_url: '.$data->code_url;echo '<br>';
+        //echo 'code_url: '.$data->code_url;echo '<br>';
+        $viewData=[
+            'code_url'=>$data->code_url
+        ];
+        return view('/weixin/pay',$viewData);
 
     }
 
