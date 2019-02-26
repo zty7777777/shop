@@ -15,8 +15,8 @@ class PayController extends Controller{
     public function index($oid){
 
 
-        $order_amount=1; //订单总金额
         $orderinfo=OrderModel::where(['oid'=>$oid])->first();
+
         if(empty($orderinfo)){
             exit('此订单不存在');
         }
@@ -28,7 +28,7 @@ class PayController extends Controller{
             'sign_type'     => 'MD5',
             'body'          => 'zty订单支付--'.mt_rand(1111,9999) . str_random(6),
             'out_trade_no'  => $orderinfo['order_sn'],                       //本地订单号
-            'total_fee'     => $orderinfo['$order_amount'],     //订单总金额
+            'total_fee'     => $orderinfo['order_amount'],     //订单总金额
             'spbill_create_ip'  => $_SERVER['REMOTE_ADDR'],     //客户端IP
             'notify_url'    => $this->weixin_notify_url,        //通知回调地址
             'trade_type'    => 'NATIVE'                         // 交易类型
@@ -41,7 +41,7 @@ class PayController extends Controller{
         $xml=$this->ToXml();   //将数组转化为xml格式
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
-        //echo 'code_url: '.$data->code_url;echo '<br>';
+        //echo 'code_url: '.$data->code_url;echo '<br>';exit;
         $viewData=[
             'code_url'=>$data->code_url
         ];
