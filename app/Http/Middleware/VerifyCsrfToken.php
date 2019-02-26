@@ -12,11 +12,13 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
+        //
         '/cartadd',
         '/pay/alipay/notify',
         '/weixin/valid1',
         '/weixin/valid',
-        '/admin/userchat'
-        //
+        '/admin/userchat',
+        '/weixin/pay/notice'
+
     ];
 }

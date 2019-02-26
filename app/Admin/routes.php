@@ -26,9 +26,7 @@ Route::group([
     $router->post('/auth','WeixinPmMediaController@group_content');
 
     $router->get('/userchat', 'WeixinController@chatindex');   //客服私聊视图
-
-
-    $router->post('/userchat', 'WeixinController@dochat');   //客服私聊
+    $router->post('/userchat', 'WeixinController@dochat');   //客服私聊发信息
     $router->get('/userchat/getmsg', 'WeixinController@getChatMsg');   //获取消息记录
 
 

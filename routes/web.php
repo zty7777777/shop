@@ -88,13 +88,18 @@ Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');      //支�
 
 
 //微信
+
+//微信公众号
 Route::get('/weixin/valid','Weixin\WeixinController@validToken');
 Route::get('/weixin/valid1','Weixin\WeixinController@validToken1');   //access_token
 Route::post('/weixin/valid1','Weixin\WeixinController@wxEvent');        //接收微信服务器事件推送
 Route::post('/weixin/valid','Weixin\WeixinController@validToken');
 
-
 Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu');     //创建菜单
+
+//微信支付
+Route::get('/weixin/pay/index','Weixin\PayController@index');
+Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
 
 
 

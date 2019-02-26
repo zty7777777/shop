@@ -17,7 +17,8 @@ setInterval(function(){
 
                 $("#chat_div").append(msg_str);
                 $("#msg_pos").val(d.data.id)
-            }else{
+
+            }else if(d.errno==1){
 
             }
         }

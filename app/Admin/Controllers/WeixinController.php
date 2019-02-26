@@ -167,7 +167,7 @@ class WeixinController extends Controller
      * 客服私聊视图
      */
 
-    public function chatview($data){
+  /*  public function chatview($data){
         $form = new Form(new WeixinUser);
 
         //$form->setView('/weixin/chat',['openid'=>$data['openid']]);
@@ -175,9 +175,9 @@ class WeixinController extends Controller
 
         $form->text('content','输入聊天内容')->placeholder('请输入');
         $form->hidden('openid')->value($data['openid']);
-        return $form;
+        //return $form;
         return view('/weixin/chat',['openid'=>$data['openid']]);
-    }
+    }*/
 
     /**
      * 接收处理消息 dochat
@@ -238,7 +238,10 @@ class WeixinController extends Controller
         $openid = $_GET['openid'];  //用户openid
         $pos = $_GET['pos'];        //上次聊天位置
 
+        $id = WeixinMsg::where(['openid'=>$openid])->max('id');
+        //echo $id;exit;
         $msg = WeixinMsg::where(['openid'=>$openid])->where('id','>',$pos)->first();
+
         $msg['addtime']=date('Y-m-d H:i:s',$msg['addtime']);
 
         //$msg = WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->get();
