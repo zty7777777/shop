@@ -179,14 +179,17 @@ class PayController extends Controller{
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents('logs/wx_pay_notice.log',$log_str,FILE_APPEND);
 
-        $xml = simplexml_load_string($data);
+        //$xml = simplexml_load_string($data);
+        $xml = (array)simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-        if($xml->result_code=='SUCCESS' && $xml->return_code=='SUCCESS'){      //微信支付成功回调
+
+        if($xml['result_code']=='SUCCESS' && $xml['return_code']=='SUCCESS'){      //微信支付成功回调
             //验证签名
+            $this->values=[];
+            $this->values=$xml;
             $sign=$this->SetSign(); //签名
-            $nowSign=$xml->sign;
 
-            if($sign==$nowSign){       //签名验证成功
+            if($sign==$xml['sign']){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
                 $orderData=[
                   'is_pay'=>1,
