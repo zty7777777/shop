@@ -223,9 +223,9 @@ class PayController extends Controller{
             'u_id'=>1,
             'order_sn'=>$order_sn
         ];
-       $res=OrderModel::where($where)->first();
-       if($res){
-           echo 'yes';
+       $data=OrderModel::where($where)->first();
+       if($data['is_pay']){
+           return json_encode(['msg'=>'yes']);
        }
     }
 

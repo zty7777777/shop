@@ -35,7 +35,7 @@
             type: 'get',
             dataType: 'json',
             success: function (d) {
-               if(d){
+               if(d.msg=='yes'){
                 alert('支付成功');
                 location.href="/orderlist"
                }
