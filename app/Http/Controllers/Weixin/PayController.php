@@ -70,7 +70,7 @@ class PayController extends Controller{
         curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,2);//严格校验
         //设置header
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        //要求结果为字符串且输出到屏幕上
+        //要求结果为字符串且输出到屏幕上。
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 //		if($useCert == true){
 //			//设置证书
