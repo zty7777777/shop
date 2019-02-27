@@ -26,7 +26,7 @@ class PayController extends Controller{
             'mch_id'        =>  env('WEIXIN_MCH_ID'),       // 商户ID
             'nonce_str'     => str_random(16),             // 随机字符串
             'sign_type'     => 'MD5',
-            'body'          => 'zty订单支付--'.mt_rand(1111,9999) . str_random(6),
+            'body'          => 'zty订单支付--'.$order_sn,
             'out_trade_no'  => $order_sn,                       //本地订单号
             'total_fee'     => 1,     //订单总金额
             'spbill_create_ip'  => $_SERVER['REMOTE_ADDR'],     //客户端IP
@@ -41,19 +41,25 @@ class PayController extends Controller{
         $xml=$this->ToXml();   //将数组转化为xml格式
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
+
+       /* echo "return_code:". $data->return_code.'<br>';
+        echo "return_msg:". $data->return_msg.'<br>';
+        echo "appid:". $data->appid.'<br>';
+        echo "mch_id:".$data->mch_id.'<br>';
+        echo "nonce_str:". $data->nonce_str.'<br>';
+        echo "sign:". $data->sign.'<br>';
+        echo "result_code:". $data->result_code.'<br>';
+        echo "err_code:". $data->err_code.'<br>';
+        echo "err_code_des:". $data->err_code_des.'<br>';*/
         //var_dump($data);exit;
-        echo 'code_url: '.$data->code_url;echo '<br>';
+        //echo 'code_url: '.$data->code_url;echo '<br>';
         $code_url=$data->code_url;
 
-
-        return view('weixin.pay',['code_url'=>$code_url]);
-       // $url=base64_encode($url);
-      //        die;
-        //echo '<pre>';print_r($data);echo '</pre>';
-        //echo $url;die;
-        //header('refresh:0;url=/weixin/pay/code_url/'.$url.'');
-
         //将 code_url 返回给前端，前端生成 支付二维码。
+        return view('weixin.pay',['code_url'=>$code_url]);
+
+
+
 
     }
     /*public function code_url($code_url){
