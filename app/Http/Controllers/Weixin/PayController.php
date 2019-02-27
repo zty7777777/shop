@@ -195,7 +195,7 @@ class PayController extends Controller{
                   'is_pay'=>1,
                   'pay_amount'=>$xml['total_fee'],
                   'pay_time'=>time(),
-                  'plat_id'=>$xml['transaction_id'],
+                  'plat_oid'=>$xml['transaction_id'],
                    'plat'=>2
                 ];
 

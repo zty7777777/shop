@@ -21,7 +21,7 @@ class OrderController extends Controller{
 
 
         $uid=session()->get('uid');
-        
+
         $cart_id=explode(',',$cart_id);
 
         $cartInfo=CartModel::whereIn('id',$cart_id)->where('u_id',$uid)->get()->toArray();
