@@ -56,7 +56,7 @@ class PayController extends Controller{
         $code_url=$data->code_url;
 
         //将 code_url 返回给前端，前端生成 支付二维码。
-        return view('weixin.pay',['code_url'=>$code_url]);
+        return view('weixin.pay',['code_url'=>$code_url,'order_sn'=>$order_sn]);
 
 
 
@@ -196,7 +196,7 @@ class PayController extends Controller{
                   'pay_amount'=>$xml['total_fee'],
                   'pay_time'=>time(),
                   'plat_oid'=>$xml['transaction_id'],
-                   'plat'=>2
+                  'plat'=>2
                 ];
 
                 OrderModel::where(['order_sn'=>$xml['out_trade_no']])->update($orderData);
@@ -213,4 +213,20 @@ class PayController extends Controller{
         echo $response;
 
     }
+
+    /**
+     * 检查数据库状态
+     */
+
+    public function success($order_sn){
+        $where=[
+            'u_id'=>1,
+            'order_sn'=>$order_sn
+        ];
+       $res=OrderModel::where($where)->first();
+       if($res){
+           echo 'yes';
+       }
+    }
+
 }

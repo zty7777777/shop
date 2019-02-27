@@ -100,6 +100,7 @@ Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu');     //�
 //微信支付
 Route::get('/weixin/pay/index/{oid}','Weixin\PayController@index');
 Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
+Route::get('/weixin/pay/success/{order_sn}','Weixin\PayController@success');     //微信支付通知回调
 
 
 
