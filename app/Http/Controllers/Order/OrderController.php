@@ -62,7 +62,8 @@ class OrderController extends Controller{
     /** 订单列表 */
     public function orderList(){
 
-        $orderInfo=OrderModel::where(['u_id'=>session()->get('uid')])->orderBy('oid','desc')->get()->toArray();
+        $orderInfo=OrderModel::where(['u_id'=>session()->get('uid')])
+                               ->orderBy('oid','desc')->get()->toArray();
         $data = [
             'list'  => $orderInfo
         ];
