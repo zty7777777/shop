@@ -50,7 +50,7 @@ class PayController extends Controller{
         //echo $url;die;
         header('refresh:0;url=/weixin/pay/code_url/'.$url.'');
 
-        //将 code_url 返回给前端，前端生成 支付二维码
+        //将 code_url 返回给前端，前端生成 支付二维码。
 
     }
     public function code_url($code_url){
