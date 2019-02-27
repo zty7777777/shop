@@ -193,8 +193,8 @@ class PayController extends Controller{
                 //TODO 逻辑处理  订单状态更新
                 $orderData=[
                   'is_pay'=>1,
-                  'pay_amount'=>$xml->total_fee,
-                  'pay_time'=>$xml->time_end
+                  'pay_amount'=>$xml['total_fee'],
+                  'pay_time'=>$xml['time_end']
                 ];
 
                 OrderModel::where(['order_sn'=>$xml['out_trade_no']])->update($orderData);
