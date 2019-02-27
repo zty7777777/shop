@@ -197,7 +197,7 @@ class PayController extends Controller{
                   'pay_time'=>$xml->time_end
                 ];
 
-                OrderModel::where(['order_sn'=>$xml->out_trade_no])->update($orderData);
+                OrderModel::where(['order_sn'=>$xml['out_trade_no']])->update($orderData);
 
             }else{
                 //TODO 验签失败
