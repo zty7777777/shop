@@ -42,23 +42,26 @@ class PayController extends Controller{
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
         //var_dump($data);exit;
-        //echo 'code_url: '.$data->code_url;echo '<br>';exit;
+        echo 'code_url: '.$data->code_url;echo '<br>';exit;
         $url=$data->code_url;
-        $url=base64_encode($url);
+
+
+        return view('weixin.pay',['code_url'=>$code_url]);
+       // $url=base64_encode($url);
       //        die;
         //echo '<pre>';print_r($data);echo '</pre>';
         //echo $url;die;
-        header('refresh:0;url=/weixin/pay/code_url/'.$url.'');
+        //header('refresh:0;url=/weixin/pay/code_url/'.$url.'');
 
         //将 code_url 返回给前端，前端生成 支付二维码。
 
     }
-    public function code_url($code_url){
+    /*public function code_url($code_url){
         $code_url=base64_decode($code_url);
         //$order_id=$_COOKIE['order_id'];
         //echo $code_url;die;
         return view('weixin.pay',['code_url'=>$code_url]);
-    }
+    }*/
 
     private  function postXmlCurl($xml, $url, $useCert = false, $second = 30)
     {
