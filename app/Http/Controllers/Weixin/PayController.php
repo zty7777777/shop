@@ -194,7 +194,9 @@ class PayController extends Controller{
                 $orderData=[
                   'is_pay'=>1,
                   'pay_amount'=>$xml['total_fee'],
-                  'pay_time'=>time()
+                  'pay_time'=>time(),
+                  'plat_id'=>$xml['transaction_id'],
+                   'plat'=>2
                 ];
 
                 OrderModel::where(['order_sn'=>$xml['out_trade_no']])->update($orderData);

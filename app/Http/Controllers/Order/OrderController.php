@@ -19,7 +19,11 @@ class OrderController extends Controller{
         ];
         print_r($where);exit;*/
 
+
         $uid=session()->get('uid');
+        echo $uid;
+
+        exit;
         $cart_id=explode(',',$cart_id);
 
         $cartInfo=CartModel::whereIn('id',$cart_id)->where('u_id',$uid)->get()->toArray();

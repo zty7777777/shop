@@ -83,12 +83,11 @@ class UserController extends Controller
             header('refresh:2;/userlogin');
             exit;
         } else {
-
             $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
-            setcookie('uid', $u->u_id, time() + 86400, '/', 'shop.com', false, true);
+            setcookie('uid', $u->id, time() + 86400, '/', 'shop.com', false, true);
             setcookie('token', $token, time() + 86400, '/user', '', false, true);
 
-            $request->session()->put('uid', $u->u_id);
+            $request->session()->put('uid', $u->id);
             $request->session()->put('u_token', $token);
             echo '登录成功';
             header('refresh:2;/usercenter');
