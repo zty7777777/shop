@@ -12,14 +12,14 @@ class PayController extends Controller{
     public $weixin_unifiedorder_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
     public $weixin_notify_url = 'https://zty.tactshan.com/weixin/pay/notice';     //支付通知回调\
 
-    public function index($oid){
+    public function index($order_sn){
 
 
-        $orderinfo=OrderModel::where(['oid'=>$oid])->first();
+        //$orderinfo=OrderModel::where(['oid'=>$oid])->first();
 
-        if(empty($orderinfo)){
+        /*if(empty($orderinfo)){
             exit('此订单不存在');
-        }
+        }*/
 
         $order_info=[
             'appid'         =>  env('WEIXIN_APPID_0'),      //微信支付绑定的服务号的APPID
@@ -27,8 +27,8 @@ class PayController extends Controller{
             'nonce_str'     => str_random(16),             // 随机字符串
             'sign_type'     => 'MD5',
             'body'          => 'zty订单支付--'.mt_rand(1111,9999) . str_random(6),
-            'out_trade_no'  => $orderinfo['order_sn'],                       //本地订单号
-            'total_fee'     => $orderinfo['order_amount'],     //订单总金额
+            'out_trade_no'  => $order_sn,                       //本地订单号
+            'total_fee'     => 1,     //订单总金额
             'spbill_create_ip'  => $_SERVER['REMOTE_ADDR'],     //客户端IP
             'notify_url'    => $this->weixin_notify_url,        //通知回调地址
             'trade_type'    => 'NATIVE'                         // 交易类型
@@ -41,12 +41,23 @@ class PayController extends Controller{
         $xml=$this->ToXml();   //将数组转化为xml格式
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
+        //var_dump($data);exit;
         //echo 'code_url: '.$data->code_url;echo '<br>';exit;
-        $viewData=[
-            'code_url'=>$data->code_url
-        ];
-        return view('/weixin/pay',$viewData);
+        $url=$data->code_url;
+        $url=base64_encode($url);
+      //        die;
+        //echo '<pre>';print_r($data);echo '</pre>';
+        //echo $url;die;
+        header('refresh:0;url=/weixin/pay/code_url/'.$url.'');
 
+        //将 code_url 返回给前端，前端生成 支付二维码
+
+    }
+    public function code_url($code_url){
+        $code_url=base64_decode($code_url);
+        //$order_id=$_COOKIE['order_id'];
+        //echo $code_url;die;
+        return view('weixin.pay',['code_url'=>$code_url]);
     }
 
     private  function postXmlCurl($xml, $url, $useCert = false, $second = 30)
