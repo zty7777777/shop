@@ -42,8 +42,8 @@ class PayController extends Controller{
         $rs = $this->postXmlCurl($xml, $this->weixin_unifiedorder_url, $useCert = false, $second = 30);
         $data =  simplexml_load_string($rs);
         //var_dump($data);exit;
-        echo 'code_url: '.$data->code_url;echo '<br>';exit;
-        $url=$data->code_url;
+        echo 'code_url: '.$data->code_url;echo '<br>';
+        $code_url=$data->code_url;
 
 
         return view('weixin.pay',['code_url'=>$code_url]);
