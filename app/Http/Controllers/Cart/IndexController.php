@@ -10,7 +10,7 @@ use App\Model\GoodsModel;
 
 class IndexController extends  Controller{
 
-    public $uid;
+   /* public $uid;
     public function __construct()
     {
         $this->middleware(function($request,$next){
@@ -18,7 +18,7 @@ class IndexController extends  Controller{
             return $next($request);
         });
         $this->middleware('auth');
-    }
+    }*/
 
 
     /** 购物车展示 */

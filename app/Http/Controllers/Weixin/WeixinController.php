@@ -428,7 +428,7 @@ class WeixinController extends Controller
         echo '<pre>';print_r($user_arr);echo '</pre>';*/
 
         //保存用户信息到数据库
-        $this->insersDb($user_arr);
+        $this->insersDb( $user_arr);
 
     }
 
@@ -466,12 +466,12 @@ class WeixinController extends Controller
 
             //header('refresh:1;');
         }
-        /*$token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
+      $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
         setcookie('uid',$uid , time() + 86400, '/', 'shop.com', false, true);
         setcookie('token', $token, time() + 86400, '/user', '', false, true);
 
-        $request->session()->put('uid', $uid);
-        $request->session()->put('u_token', $token);*/
+        session()->put('uid', $uid);
+        session()->put('u_token', $token);
 
 
     }

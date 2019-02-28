@@ -11,7 +11,7 @@ use App\Model\OrderModel;
 
 class OrderController extends Controller{
 
-    public $uid;
+  /*  public $uid;
     public function __construct()
     {
         $this->middleware(function($request,$next){
@@ -19,7 +19,7 @@ class OrderController extends Controller{
             return $next($request);
         });
         $this->middleware('auth');
-    }
+    }*/
 
 
     /** 生成订单 */
