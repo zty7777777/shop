@@ -11,6 +11,17 @@ use App\Model\OrderModel;
 
 class OrderController extends Controller{
 
+    public $uid;
+    public function __construct()
+    {
+        $this->middleware(function($request,$next){
+            $this->uid=session()->get('u_id');
+            return $next($request);
+        });
+        $this->middleware('auth');
+    }
+
+
     /** 生成订单 */
     public function orderCreate($cart_id){
       /*  $where=[

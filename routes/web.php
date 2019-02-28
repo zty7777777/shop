@@ -57,7 +57,7 @@ Route::post('/userreg','User\UserController@doreg');
 //用户登录
 Route::get('/userlogin','User\UserController@login');
 Route::post('/userlogin','User\UserController@checklogin');
-Route::get('/usercenter','User\UserController@center')->middleware('check.login.token');
+Route::get('/usercenter','User\UserController@center');//->middleware('check.login.token');
 Route::get('/updatepwd','User\UserController@pwdview');//->middleware('check.login.token');
 
 
@@ -70,19 +70,19 @@ Route::post('/goods/upload/do','Goods\GoodsController@upload');
 
 //购物车
 Route::get('/cartlist','Cart\IndexController@cartlist');
-Route::get('/cartaddtest/{goods_id?}','Cart\IndexController@addtest')->middleware('check.login.token');//购物车添加
+Route::get('/cartaddtest/{goods_id?}','Cart\IndexController@addtest');//->middleware('check.login.token');//购物车添加
 Route::post('/cartadd','Cart\IndexController@add');    //购物车添加
 Route::post('/cartdel','Cart\IndexController@del');    //删除
 
 
 //订单
-Route::get('/ordercreate/{cart_id?}','Order\OrderController@ordercreate')->middleware('check.login.token');
-Route::get('/orderlist','Order\OrderController@orderlist')->middleware('check.login.token');
+Route::get('/ordercreate/{cart_id?}','Order\OrderController@ordercreate');//->middleware('check.login.token');
+Route::get('/orderlist','Order\OrderController@orderlist');//->middleware('check.login.token');
 
 
 //支付
-Route::get('/pay/alipay/test','Pay\AlipayController@test')->middleware('check.login.token');  //测试 订单支付
-Route::get('/pay/o/{oid}','Pay\AlipayController@orderPay')->middleware('check.login.token');   //订单支付
+Route::get('/pay/alipay/test','Pay\AlipayController@test');//->middleware('check.login.token');  //测试 订单支付
+Route::get('/pay/o/{oid}','Pay\AlipayController@orderPay');//->middleware('check.login.token');   //订单支付
 Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');       //支付宝支付 同步通知回调
 Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');      //支付宝支付 异步通知回调
 
@@ -101,6 +101,11 @@ Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu');     //�
 Route::get('/weixin/pay/index/{oid}','Weixin\PayController@index');
 Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
 Route::get('/weixin/pay/success/{order_sn}','Weixin\PayController@success');     //微信支付通知回调
+
+//微信扫码登录
+Route::get('/weixin/login','Weixin\WeixinController@login');
+Route::get('/weixin/getcode','Weixin\WeixinController@getCode');       //接收code
+
 
 
 
