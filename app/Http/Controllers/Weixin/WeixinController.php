@@ -455,8 +455,11 @@ class WeixinController extends Controller
                 'headimgurl'=>$user_arr['headimgurl'],
             ];
 
-            WeixinUser::insert($wx_data);
-            echo '登录成功';
+            $rs=WeixinUser::insert($wx_data);
+            if($rs){
+                echo '登录成功';
+            }
+
             //header('refresh:1;');
         }
 
