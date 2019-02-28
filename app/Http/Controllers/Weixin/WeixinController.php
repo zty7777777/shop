@@ -433,11 +433,12 @@ class WeixinController extends Controller
     }
 
     /** 保存用户信息到数据库 */
-    public function insersDb($user_arr){
+    public function insersDb(Request $request,$user_arr){
         //根据unionid查询p_wx_users表里是否有该用户信息
         $res=WeixinUser::where(['unionid'=>$user_arr['unionid']])->first();
         if($res){
-
+            $uid=WeixinUser::where(['unionid'=>$user_arr['unionid']])->value('uid');
+            echo '登录成功>>>已有此用户';
         }else{
             //存入users主表
             $data=[
@@ -460,11 +461,17 @@ class WeixinController extends Controller
 
             $rs=WeixinUser::insert($wx_data);
             if($rs){
-                echo '登录成功';
+                echo '登录成功>>没有此用户';
             }
 
             //header('refresh:1;');
         }
+        $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
+        setcookie('uid',$uid , time() + 86400, '/', 'shop.com', false, true);
+        setcookie('token', $token, time() + 86400, '/user', '', false, true);
+
+        $request->session()->put('uid', $uid);
+        $request->session()->put('u_token', $token);
 
 
     }
