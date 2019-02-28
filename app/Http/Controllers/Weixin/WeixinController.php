@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Weixin;
 
+use App\Model\UsersModel;
 use App\Model\WeixinMedia;
 use App\Model\WeixinMsg;
+use App\Model\WxRegisterUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,6 +15,7 @@ use App\Model\WeixinUser;
 
 use GuzzleHttp;
 use Illuminate\Support\Facades\Storage;
+use function Psy\bin;
 
 class WeixinController extends Controller
 {
@@ -401,12 +404,67 @@ class WeixinController extends Controller
      */
     public function getCode()
     {
-        echo '<pre>';print_r($_GET);echo '</pre>';
+        //用code换取access_token 请求接口
+        //echo '<pre>';print_r($_GET);echo '</pre>';
         $code = $_GET['code'];
-        echo 'code: '.$code;
+        //echo 'code: '.$code;
+
+        $token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxe24f70961302b5a5&secret=0f121743ff20a3a454e4a12aeecef4be&code='.$code.'&grant_type=authorization_code';
+
+        $token_json=file_get_contents($token_url);
+        $token_arr = json_decode($token_json,true);
+        /*echo '<hr>';
+        echo '<pre>';print_r($token_arr);echo '</pre>';*/
+        //取出access_token
+        $access_token=$token_arr['access_token'];
+        $openid=$token_arr['openid'];
+
+        // 3 携带token  获取用户信息
+        $user_info_url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
+        $user_json = file_get_contents($user_info_url);
+
+        $user_arr = json_decode($user_json,true);
+        /*echo '<hr>';
+        echo '<pre>';print_r($user_arr);echo '</pre>';*/
+
+        //保存用户信息到数据库
+        $this->insersDb($user_arr);
+
+    }
+
+    /** 保存用户信息到数据库 */
+    public function insersDb($user_arr){
+        //根据unionid查询p_wx_users表里是否有该用户信息
+        $res=WeixinUser::where(['unionid'=>$user_arr['unionid']])->first();
+        if($res){
+
+        }else{
+            //存入users主表
+            $data=[
+                'name'=>$user_arr['nickname']
+               ];
+            $uid=UsersModel::insertGetId($data);
+
+            $wx_data=[
+                'uid'=>$uid,
+                'openid'=>$user_arr['openid'],
+                'nickname'=>$user_arr['nickname'],
+                'sex'=>$user_arr['sex'],
+                'unionid'=>$user_arr['unionid'],
+                'addtime'=>time(),
+                'headimgurl'=>$user_arr['headimgurl'],
+            ];
+
+            WeixinUser::insert($wx_data);
+            echo '登录成功';
+            //header('refresh:1;');
+        }
+
+
     }
 
 
+    /** 测试 */
     public  function testsub(){
         $str="abc.jpgas";
         //echo substr($str,strpos($str,'.')+1);
