@@ -454,7 +454,7 @@ class WeixinController extends Controller
                 'nickname'=>$user_arr['nickname'],
                 'sex'=>$user_arr['sex'],
                 'unionid'=>$user_arr['unionid'],
-                'addtime'=>time(),
+                'add_time'=>time(),
                 'headimgurl'=>$user_arr['headimgurl'],
             ];
 
