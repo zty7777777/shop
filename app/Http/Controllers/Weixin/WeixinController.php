@@ -441,7 +441,10 @@ class WeixinController extends Controller
         }else{
             //存入users主表
             $data=[
-                'name'=>$user_arr['nickname']
+                'name'=>$user_arr['nickname'],
+                'email'=>'',
+                'password'=>'',
+                'remember_token'=>''
                ];
             $uid=UsersModel::insertGetId($data);
 
