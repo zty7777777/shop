@@ -506,7 +506,7 @@ class WeixinController extends Controller
     }
 
     /**
-     * 计算JSSDK sign
+     * 计算JSSDK sign e
      */
     public function wxJsConfigSign()
     {
