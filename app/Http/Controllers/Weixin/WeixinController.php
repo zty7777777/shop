@@ -524,6 +524,7 @@ class WeixinController extends Controller
         $ticket = $this->getJsapiTicket();
         //var_dump($ticket);exit;
         $str =  'jsapi_ticket='.$ticket.'&noncestr='.$param['noncestr']. '&timestamp='. $param['timestamp']. '&url='.$current_url;
+        //echo $str;exit;
         $signature=sha1($str);
         return $signature;
     }
