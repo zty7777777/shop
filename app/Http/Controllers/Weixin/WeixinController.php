@@ -505,5 +505,14 @@ class WeixinController extends Controller
         return view('weixin.jssdk',$data);
     }
 
+    /**
+     * 计算JSSDK sign
+     */
+    public function wxJsConfigSign()
+    {
+
+        $sign = str_random(15);
+        return $sign;
+    }
 
 }
