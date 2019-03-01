@@ -518,7 +518,7 @@ class WeixinController extends Controller
      */
     public function wxJsConfigSign($param)
     {
-        $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];     //当前调用 jsapi的 url
+        $current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];     //当前调用 jsapi的 url
        //echo $_SERVER['HTTP_HOST'].'->>>>-'.$_SERVER['REQUEST_URI'];exit;   //域名和路由
 
         $ticket = $this->getJsapiTicket();
