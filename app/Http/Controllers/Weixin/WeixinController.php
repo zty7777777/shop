@@ -191,7 +191,7 @@ class WeixinController extends Controller
                             <CreateTime>'.time().'</CreateTime>
                             <MsgType><![CDATA[text]]></MsgType>
                             <Content>
-                                <![CDATA['. '我木兰贼秀鸭, 现在时间'. date('Y-m-d H:i:s') .']]>
+                                <![CDATA['.'(沉默杀教程)'."https://zty.tactshan.com/wx/video/eJF0nXBXXKQezvT6.mp4".']]>
                             </Content>
                         </xml>';
         echo $xml_response;
