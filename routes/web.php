@@ -106,6 +106,9 @@ Route::get('/weixin/pay/success/{order_sn}','Weixin\PayController@success');    
 Route::get('/weixin/login','Weixin\WeixinController@login');
 Route::get('/weixin/getcode','Weixin\WeixinController@getCode');       //接收code
 
+//微信JSSDK
+Route::get('/weixin/jssdk','Weixin\WeixinController@jssdk');
+
 
 
 

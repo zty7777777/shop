@@ -486,4 +486,24 @@ class WeixinController extends Controller
     }
 
 
+    /**
+     * weixin JSSDK
+     */
+
+    public function  jssdk(){
+
+        $jsconfig=[
+            'appid' => env('WEIXIN_APPID_0'),        //APPID
+            'timestamp' => time(),
+            'noncestr'    => str_random(10),
+            'sign'      => $this->wxJsConfigSign()
+        ];
+        $data=[
+            'jsconfig'=>$jsconfig
+        ];
+
+        return view('weixin.jssdk',$data);
+    }
+
+
 }
