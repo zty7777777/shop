@@ -169,6 +169,8 @@ class WeixinController extends Controller
                 }elseif($event=='CLICK'){               //click 菜单
                     if($xml->EventKey=='huamulan'){       // 根据 EventKey判断菜单
                         $this->huamulan($openid,$xml->ToUserName);
+                    }elseif ($xml->EventKey=='dc'){
+                        $this->dc($openid,$xml->ToUserName);
                     }
                 }
 
@@ -192,6 +194,21 @@ class WeixinController extends Controller
                             <MsgType><![CDATA[text]]></MsgType>
                             <Content>
                                 <![CDATA['.'(沉默杀教程)'."https://zty.tactshan.com/wx/video/eJF0nXBXXKQezvT6.mp4".']]>
+                            </Content>
+                        </xml>';
+        echo $xml_response;
+    }
+
+    public function dc($openid,$from)
+    {
+        // 文本消息
+        $xml_response = '<xml>
+                            <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                            <FromUserName><![CDATA['.$from.']]></FromUserName>
+                            <CreateTime>'.time().'</CreateTime>
+                            <MsgType><![CDATA[text]]></MsgType>
+                            <Content>
+                                <![CDATA['.'(大仙的大徒弟)'."https://zty.tactshan.com/wx/video/cLfLKUUzpbDpRkKb.mp4".']]>
                             </Content>
                         </xml>';
         echo $xml_response;
@@ -364,6 +381,11 @@ class WeixinController extends Controller
                     "type"  => "click",       // click类型
                     "name"  => "木兰首秀",
                     "key"   => "huamulan"
+                ],
+                [
+                    "type"  => "click",       // click类型
+                    "name"  => "貂蝉",
+                    "key"   => "dc"
                 ],
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
