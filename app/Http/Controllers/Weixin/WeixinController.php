@@ -366,26 +366,21 @@ class WeixinController extends Controller
                     "name" =>'仙',
                     "sub_button"  =>[
                         [
-                            "type"  => "view",
-                            "name"  => "项目",
-                            "url"   => "https://zty.tactshan.com"
+                            "type"  => "click",       // click类型
+                            "name"  => "貂蝉",
+                            "key"   => "dc"
                         ],
                         [
-                            "type"  => "view",
-                            "name"  => "2",
-                            "url"   => "https://www.baidu.com"
+                            "type"  => "click",       // click类型
+                            "name"  => "木兰首秀",
+                            "key"   => "huamulan"
                         ]
                     ]
                 ],
                 [
-                    "type"  => "click",       // click类型
-                    "name"  => "木兰首秀",
-                    "key"   => "huamulan"
-                ],
-                [
-                    "type"  => "click",       // click类型
-                    "name"  => "貂蝉",
-                    "key"   => "dc"
+                    "type"  => "view",
+                    "name"  => "项目",
+                    "url"   => "https://zty.tactshan.com"
                 ],
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
