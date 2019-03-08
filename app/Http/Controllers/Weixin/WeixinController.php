@@ -380,7 +380,7 @@ class WeixinController extends Controller
                 [
                     "type"  => "view",
                     "name"  => "项目",
-                    "url"   => "https://zty.tactshan.com"
+                    "url"   => "https://lara.zty77.com"
                 ],
                 [
                     "type"  => "view",      // view类型 跳转指定 URL
@@ -496,15 +496,6 @@ class WeixinController extends Controller
     }
 
 
-    /** 测试 */
-    public  function testsub(){
-        $str="abc.jpgas";
-        //echo substr($str,strpos($str,'.')+1);
-
-        return redirect('/goodslist');//页面跳转。重定向
-    }
-
-
     /**
      * weixin JSSDK
      */
@@ -571,6 +562,15 @@ class WeixinController extends Controller
         }
         return $ticket;
 
+    }
+
+
+    /** 测试 */
+    public  function testsub(){
+        $str="abc.jpgas";
+        //echo substr($str,strpos($str,'.')+1);
+
+        return redirect('/goodslist');//页面跳转。重定向
     }
 
 

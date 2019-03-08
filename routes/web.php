@@ -117,7 +117,9 @@ Route::get('/weixin/jssdk','Weixin\WeixinController@jssdk');
 //测试
 Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
 Route::get('/Order','Ce\CeController@ce');
-Route::get('/weixin/testsub','Weixin\WeixinController@testsub');
+
+Route::get('/weixin/testsub','Weixin\WeixinController2@testsub');
+Route::get('/weixin/test2','Weixin\WeixinController2@test2');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

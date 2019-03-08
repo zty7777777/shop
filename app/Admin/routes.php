@@ -30,5 +30,10 @@ Route::group([
     $router->get('/userchat/getmsg', 'WeixinController@getChatMsg');   //获取消息记录
 
 
+    //考试
+    $router->resource('/weixintest',Weixin\WeixinController::class);
+    $router->get('/weixin/hei','Weixin\WeixinController@hei');
+
+
 
 });
