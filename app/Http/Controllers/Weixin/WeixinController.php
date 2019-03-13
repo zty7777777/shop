@@ -573,7 +573,7 @@ class WeixinController extends Controller
 
     }
 
-    /** 测试 aa*/
+    /** 测试 ab*/
     public  function testsub(){
         $str="abc.jpgas";
         //echo substr($str,strpos($str,'.')+1);
