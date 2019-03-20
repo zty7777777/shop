@@ -111,6 +111,14 @@ Route::get('/weixin/jssdk','Weixin\WeixinController@jssdk');
 
 
 
+//curl
+Route::post('/api/curl','Curl\CurlController@test');
+Route::post('/api/sign','Curl\CurlController@sign');
+Route::post('/api/app','Curl\CurlController@app');
+
+
+
+
 
 
 

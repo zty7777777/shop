@@ -19,7 +19,8 @@ class VerifyCsrfToken extends Middleware
         '/weixin/valid',
         '/admin/userchat',
         '/weixin/pay/notice',
-        '/userlogin'
+        '/userlogin',
+        '/api/*'
 
     ];
 }
