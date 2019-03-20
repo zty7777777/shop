@@ -88,7 +88,10 @@ class CurlController extends Controller{
      */
     public function app()
     {
-        echo json_encode('this is response');
+        $data=[
+            'info'=>'this is response'
+          ];
+        echo json_encode($data);
     }
 
 }
