@@ -10,11 +10,11 @@ class ApiLoginController extends  Controller{
   public function loginInfo()
   {
       $account=$_POST['account'];
-      $pwd=$_POST['password'];
+      $password=$_POST['password'];
 
       $data=[
         'account'=>$account,
-        'pwd'=>$pwd
+        'password'=>$password
       ];
       $url="http://passport.zty77.com/new/login";
       $ch=curl_init();
