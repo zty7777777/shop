@@ -103,7 +103,7 @@ class CurlController extends Controller{
     {
         //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
        $account=$_POST['account'];
-       $pwd=$_POST['pwd'];
+       $pwd=$_POST['password'];
 
         $u = UserModel::where(['email' => $account])->first();
         if (empty($u)) {
