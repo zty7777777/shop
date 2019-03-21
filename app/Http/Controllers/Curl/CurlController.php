@@ -99,13 +99,14 @@ class CurlController extends Controller{
     /**
      * 登录
      */
-    public function login()
+    public function login(Request $request)
     {
         //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
        $account=$_POST['account'];
        $pwd=$_POST['password'];
 
         $u = UserModel::where(['email' => $account])->first();
+
         if (empty($u)) {
             echo '账号不存在';
             exit;
