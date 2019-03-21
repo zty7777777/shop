@@ -106,7 +106,7 @@ class CurlController extends Controller{
        $pwd=$_POST['password'];
 
         $u = UserModel::where(['email' => $account])->first();
-
+        var_dump($u);die;
         if (empty($u)) {
             echo '账号不存在';
             exit;
