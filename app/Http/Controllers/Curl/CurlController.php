@@ -49,27 +49,27 @@ class CurlController extends Controller{
      *接收数据
      */
     public function  sign()
-    {
-        $sign=$_POST['sign'];
+{
+    $sign=$_POST['sign'];
 
-        //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';
+    //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';
 
-        // 加载公钥 并转为openssl格式
-        $pub_key = openssl_pkey_get_public(file_get_contents($this->pub_key));
+    // 加载公钥 并转为openssl格式
+    $pub_key = openssl_pkey_get_public(file_get_contents($this->pub_key));
 
-        // 验签
-        $verify=$this->verify($sign,$pub_key);
-        //var_dump($verify); // int(1)表示验签成功
-        if($verify==1){
-            $post=$_POST['data'];
+    // 验签
+    $verify=$this->verify($sign,$pub_key);
+    //var_dump($verify); // int(1)表示验签成功
+    if($verify==1){
+        $post=$_POST['data'];
 
-            $decrypted='';
-            openssl_public_decrypt(base64_decode($post),$decrypted,$pub_key);
-            var_dump($decrypted);
-        }else{
-            echo 'sign fail';
-        }
+        $decrypted='';
+        openssl_public_decrypt(base64_decode($post),$decrypted,$pub_key);
+        var_dump($decrypted);
+    }else{
+        echo 'sign fail';
     }
+}
 
     //验签
     function verify($sign,$pub_key)
@@ -89,36 +89,36 @@ class CurlController extends Controller{
      * 移动app测试
      */
     public function app()
-    {
-        $data=[
-            'info'=>'this is response'
-          ];
-        echo json_encode($data);
-    }
+{
+    $data=[
+        'info'=>'this is response'
+    ];
+    echo json_encode($data);
+}
 
     /**
      * 登录
      */
     public function login()
-    {
-        //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
-       $account=$_POST['account'];
-       $pwd=$_POST['password'];
+{
+    //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
+    $account=$_POST['account'];
+    $pwd=$_POST['password'];
 
-        $u = UserModel::where(['email' => $account])->first();
+    $u = UserModel::where(['email' => $account])->first();
 
-        if (empty($u)) {
-            echo '账号不存在';
-            exit;
-        }
-
-        if (password_verify($pwd, $u->pwd) == false) {
-            echo '账号或密码错误';
-            exit;
-        } else {
-            echo '登录成功';
-        }
-
-
+    if (empty($u)) {
+        echo '账号不存在';
+        exit;
     }
+
+    if (password_verify($pwd, $u->pwd) == false) {
+        echo '账号或密码错误';
+        exit;
+    } else {
+        echo '登录成功';
+    }
+
+
+}
 }

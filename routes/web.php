@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (\Illuminate\Support\Facades\Request $request) {
     //echo date('Y-m-d H:i:s');
       return view('welcome');
 });
@@ -114,8 +114,11 @@ Route::get('/weixin/jssdk','Weixin\WeixinController@jssdk');
 //curl
 Route::post('/api/curl','Curl\CurlController@test');
 Route::post('/api/sign','Curl\CurlController@sign');
+
+//app hb
 Route::post('/api/app','Curl\CurlController@app');
 Route::post('/api/login','Curl\CurlController@login');
+Route::post('/api/loginInfo','AppLoginToken\ApiLoginController@loginInfo');
 
 
 
