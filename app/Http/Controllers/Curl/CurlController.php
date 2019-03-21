@@ -108,12 +108,12 @@ class CurlController extends Controller{
         $u = UserModel::where(['email' => $account])->first();
 
         if (empty($u)) {
-            echo '账号不存在';
+            echo json_encode('账号不存在');
             exit;
         }
 
         if (password_verify($pwd, $u->pwd) == false) {
-            echo '账号或密码错误';
+            echo json_encode('账号或密码错误');
             exit;
         } else {
             $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
@@ -122,7 +122,7 @@ class CurlController extends Controller{
 
             $request->session()->put('uid', $u->id);
             $request->session()->put('u_token', $token);
-            echo '登录成功';
+            echo json_encode('登录成功');
         }
 
 
