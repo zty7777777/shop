@@ -99,7 +99,7 @@ class CurlController extends Controller{
     /**
      * 登录
      */
-    public function login(Request $request)
+    public function login()
     {
         //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
        $account=$_POST['account'];
