@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Curl;
 
 use App\Http\Controllers\Controller;
+use App\Model\UserModel;
+use Illuminate\Http\Request;
 
 class CurlController extends Controller{
 
@@ -94,4 +96,35 @@ class CurlController extends Controller{
         echo json_encode($data);
     }
 
+    /**
+     * 登录
+     */
+    public function login(Request $request)
+    {
+        //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';die;
+       $account=$_POST['account'];
+       $pwd=$_POST['pwd'];
+
+        $u = UserModel::where(['email' => $account])->first();
+        if (empty($u)) {
+            echo '账号不存在';
+            exit;
+        }
+
+        if (password_verify($pwd, $u->pwd) == false) {
+            echo '账号或密码错误';
+            header('refresh:2;/userlogin');
+            exit;
+        } else {
+            $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
+            setcookie('uid', $u->id, time() + 86400, '/', 'shop.com', false, true);
+            setcookie('token', $token, time() + 86400, '/user', '', false, true);
+
+            $request->session()->put('uid', $u->id);
+            $request->session()->put('u_token', $token);
+            echo '登录成功';
+        }
+
+
+    }
 }
