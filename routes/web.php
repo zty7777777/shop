@@ -119,6 +119,8 @@ Route::post('/api/sign','Curl\CurlController@sign');
 Route::post('/api/app','Curl\CurlController@app');
 Route::post('/api/login','Curl\CurlController@login');
 Route::post('/api/loginInfo','AppLoginToken\ApiLoginController@loginInfo');
+Route::post('/api/islogin','AppLoginToken\ApiLoginController@islogin');
+Route::get('/api/test','AppLoginToken\ApiLoginController@test');
 
 
 
